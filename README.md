@@ -2,6 +2,9 @@
 
 ## Cloudflare configuration
 
+- Cloudflare Tunnels: https://one.dash.cloudflare.com/a327b56a3dd52b56891002d434822f49/access/tunnels
+- Cloudflare DNS: https://dash.cloudflare.com/a327b56a3dd52b56891002d434822f49/andreygubarev.cloud/dns/records
+
 - `minio.andreygubarev.cloud`
 - `minioconsole.andreygubarev.cloud`
 
