@@ -25,7 +25,6 @@ logs: ## Show logs
 
 .PHONY: cloudflared
 cloudflared:  ## Generate cloudflared config
-	@cloudflared tunnel create $(TUNNEL_NAME) || true
+	cloudflared tunnel create $(TUNNEL_NAME) || true
 	cloudflared tunnel route dns $(TUNNEL_NAME) minio.$(TUNNEL_HOSTNAME) || true
 	cloudflared tunnel route dns $(TUNNEL_NAME) minioconsole.$(TUNNEL_HOSTNAME) || true
-	cloudflared tunnel token $(TUNNEL_NAME)
