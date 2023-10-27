@@ -8,12 +8,15 @@ help: ## Show this help
 clean: ## Remove Minio server
 	@docker compose -p $(TUNNEL_NAME) down -v
 
+.PHONY: .cache/cloudflared
+.cache/cloudflared:
+	@rm -rf .cache
+	@mkdir -p $(MAKEFILE_DIR)/.cache/cloudflared
+	@envsubst < $(MAKEFILE_DIR)/templates/cloudflared/config.yaml > $(MAKEFILE_DIR)/.cache/cloudflared/config.yaml
+
 .PHONY: up
-up: ## Start Minio server
-	@rm -rf $(MAKEFILE_DIR)/.cloudflared
-	@mkdir -p $(MAKEFILE_DIR)/.cloudflared
-	@envsubst < $(MAKEFILE_DIR)/cloudflared.yaml > $(MAKEFILE_DIR)/.cloudflared/config.yaml
-	@TUNNEL_TOKEN=$(shell cloudflared tunnel token $(TUNNEL_NAME)) docker compose -p $(TUNNEL_NAME) up -d
+up: .cache/cloudflared ## Start Minio server
+	@TUNNEL_TOKEN=$(shell cloudflared tunnel token $(TUNNEL_NAME)) TUNNEL_CONFIG=$(MAKEFILE_DIR)/.cache/cloudflared docker compose -p $(TUNNEL_NAME) up -d
 
 .PHONY: down
 down: ## Stop Minio server
