@@ -1,5 +1,10 @@
 # Docker Compose for Minio
 
+## Cloudflare configuration
+
+- `minio.andreygubarev.cloud`
+- `minioconsole.andreygubarev.cloud`
+
 ## AWS CLI configuration
 
 ```ini
