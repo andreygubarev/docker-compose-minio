@@ -25,6 +25,8 @@ services:
       TUNNEL_TOKEN: ${TUNNEL_TOKEN}
     volumes:
       - ./files/cloudflared:/etc/cloudflared
+    depends_on:
+      - minio
 
 volumes:
   miniostorage:

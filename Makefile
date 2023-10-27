@@ -8,13 +8,9 @@ help: ## Show this help
 clean: ## Remove Minio server
 	@docker compose down -v
 
-.PHONY: build
-build: ## Build Minio server
-	@docker compose build
-
 .PHONY: up
 up: ## Start Minio server
-	@docker compose up -d
+	@TUNNEL_TOKEN=$(shell cloudflared tunnel token $(TUNNEL_NAME)) docker compose up -d
 
 .PHONY: down
 down: ## Stop Minio server
@@ -29,8 +25,7 @@ logs: ## Show logs
 
 .PHONY: cloudflared
 cloudflared:  ## Generate cloudflared config
-	cloudflared tunnel create minio
-	cloudflared tunnel info -o json minio | jq -r '.id'
-	cloudflared tunnel route dns minio minio.andreygubarev.cloud
-	cloudflared tunnel route dns minio minioconsole.andreygubarev.cloud
-	cloudflared tunnel token minio
+	@cloudflared tunnel create $(TUNNEL_NAME) || true
+	cloudflared tunnel route dns $(TUNNEL_NAME) minio.$(TUNNEL_HOSTNAME) || true
+	cloudflared tunnel route dns $(TUNNEL_NAME) minioconsole.$(TUNNEL_HOSTNAME) || true
+	cloudflared tunnel token $(TUNNEL_NAME)
