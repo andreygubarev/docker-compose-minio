@@ -6,22 +6,22 @@ help: ## Show this help
 
 .PHONY: clean
 clean: ## Remove Minio server
-	@docker compose down -v
+	@docker compose -p $(TUNNEL_NAME) down -v
 
 .PHONY: up
 up: ## Start Minio server
-	@TUNNEL_TOKEN=$(shell cloudflared tunnel token $(TUNNEL_NAME)) docker compose up -d
+	@TUNNEL_TOKEN=$(shell cloudflared tunnel token $(TUNNEL_NAME)) docker compose -p $(TUNNEL_NAME) up -d
 
 .PHONY: down
 down: ## Stop Minio server
-	@docker compose down
+	@docker compose -p $(TUNNEL_NAME) down
 
 .PHONY: restart
 restart: down up ## Restart Minio server
 
 .PHONY: logs
 logs: ## Show logs
-	@docker compose logs -f
+	@docker compose -p $(TUNNEL_NAME) logs -f
 
 .PHONY: cloudflared
 cloudflared:  ## Generate cloudflared config
