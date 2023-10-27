@@ -10,6 +10,9 @@ clean: ## Remove Minio server
 
 .PHONY: up
 up: ## Start Minio server
+	@rm -rf $(MAKEFILE_DIR)/.cloudflared
+	@mkdir -p $(MAKEFILE_DIR)/.cloudflared
+	@envsubst < $(MAKEFILE_DIR)/cloudflared.yaml > $(MAKEFILE_DIR)/.cloudflared/config.yaml
 	@TUNNEL_TOKEN=$(shell cloudflared tunnel token $(TUNNEL_NAME)) docker compose -p $(TUNNEL_NAME) up -d
 
 .PHONY: down

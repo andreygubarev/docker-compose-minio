@@ -1,8 +1,0 @@
-ingress:
-  - hostname: minio.andreygubarev.cloud
-    service: http://minio:9000
-    originRequest:
-      httpHostHeader: minio.andreygubarev.cloud
-  - hostname: minioconsole.andreygubarev.cloud
-    service: http://minio:9001
-  - service: http_status:404

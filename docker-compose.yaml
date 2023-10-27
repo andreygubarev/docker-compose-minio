@@ -22,7 +22,7 @@ services:
     environment:
       TUNNEL_TOKEN: ${TUNNEL_TOKEN}
     volumes:
-      - ./files/cloudflared:/etc/cloudflared:ro
+      - .cloudflared/:/etc/cloudflared:ro
     depends_on:
       - minio
 
