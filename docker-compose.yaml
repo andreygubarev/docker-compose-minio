@@ -4,11 +4,11 @@ services:
   minio:
     image: minio/minio
     command: server --console-address ":9001" /data
-    volumes:
-      - miniostorage:/data
     environment:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+    volumes:
+      - miniostorage:/data
     ports:
       - "9000:9000"
       - "9001:9001"
@@ -20,7 +20,9 @@ services:
 
   cloudflared:
     image: cloudflare/cloudflared
-    command: tunnel
+    command: tunnel run
+    environment:
+      TUNNEL_TOKEN: ${TUNNEL_TOKEN}
     volumes:
       - ./files/cloudflared:/etc/cloudflared
 

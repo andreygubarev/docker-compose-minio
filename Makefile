@@ -26,3 +26,11 @@ restart: down up ## Restart Minio server
 .PHONY: logs
 logs: ## Show logs
 	@docker compose logs -f
+
+.PHONY: cloudflared
+cloudflared:  ## Generate cloudflared config
+	cloudflared tunnel create minio
+	cloudflared tunnel info -o json minio | jq -r '.id'
+	cloudflared tunnel route dns minio minio.andreygubarev.cloud
+	cloudflared tunnel route dns minio minioconsole.andreygubarev.cloud
+	cloudflared tunnel token minio
