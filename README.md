@@ -1,5 +1,15 @@
 # Docker Compose for Minio
 
+## Usage
+
+```bash
+# create .env file and encrypt it
+direnv allow .
+make install  # optional, if you want need to setup new tunnel
+make up  # start minio
+make down  # stop minio
+```
+
 ## AWS CLI configuration
 
 ```ini
