@@ -7,6 +7,7 @@ services:
     environment:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+      MINIO_SERVER_URL: https://minio.andreygubarev.cloud/
     volumes:
       - miniostorage:/data
     healthcheck:
@@ -21,7 +22,7 @@ services:
     environment:
       TUNNEL_TOKEN: ${TUNNEL_TOKEN}
     volumes:
-      - ./files/cloudflared:/etc/cloudflared
+      - ./files/cloudflared:/etc/cloudflared:ro
     depends_on:
       - minio
 
